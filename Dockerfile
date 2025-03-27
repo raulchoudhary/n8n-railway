@@ -10,7 +10,15 @@ RUN apk --update add --virtual build-dependencies python3 build-base && \
     npm_config_user=root npm install --location=global n8n@${N8N_VERSION} && \
     apk del build-dependencies
 
-RUN pip install python-docx PyPDF2
+# Install Python 3 and pip
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip
+
+# Upgrade pip (optional but recommended)
+RUN pip3 install --upgrade pip
+
+# Now install your Python libraries
+RUN pip3 install python-docx PyPDF2
+
 
 WORKDIR /data
 

@@ -17,7 +17,7 @@ RUN apk add --update --no-cache python3 py3-pip
 # RUN pip3 install --upgrade pip
 
 # Install the Python libraries you need using apk
-RUN apk add --update --no-cache py3-docx py3-pypdf2
+RUN apk add --update --no-cache python3-docx py3-pypdf2
 
 
 WORKDIR /data

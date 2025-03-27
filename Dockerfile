@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18.19.1-alpine3.18
 
 ARG N8N_VERSION=1.84.2
 

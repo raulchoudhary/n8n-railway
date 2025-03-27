@@ -13,11 +13,11 @@ RUN apk --update add --virtual build-dependencies python3 build-base && \
 # Install Python 3 and pip
 RUN apk add --update --no-cache python3 py3-pip
 
-# Upgrade pip (optional but recommended)
-RUN pip3 install --upgrade pip
+# Upgrade pip (optional, might cause issues on Alpine - let's try without for now)
+# RUN pip3 install --upgrade pip
 
-# Install the Python libraries you need
-RUN pip3 install python-docx PyPDF2
+# Install the Python libraries you need using apk
+RUN apk add --update --no-cache py3-docx py3-pypdf2
 
 
 WORKDIR /data

@@ -11,12 +11,12 @@ RUN apk --update add --virtual build-dependencies python3 build-base && \
     apk del build-dependencies
 
 # Install Python 3 and pip
-RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip
+RUN apk add --update --no-cache python3 py3-pip
 
 # Upgrade pip (optional but recommended)
 RUN pip3 install --upgrade pip
 
-# Now install your Python libraries
+# Install the Python libraries you need
 RUN pip3 install python-docx PyPDF2
 
 

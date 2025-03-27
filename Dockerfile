@@ -16,8 +16,11 @@ RUN apk add --update --no-cache python3 py3-pip
 # Upgrade pip (optional, might cause issues on Alpine - let's try without for now)
 # RUN pip3 install --upgrade pip
 
+# Update the package index
+RUN apk update
+
 # Install the Python libraries you need using apk
-RUN apk add --update --no-cache python3-docx py3-pypdf2
+RUN apk add --no-cache python3-docx py3-pypdf2
 
 
 WORKDIR /data

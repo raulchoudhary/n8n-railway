@@ -10,13 +10,6 @@ RUN apk --update add --virtual build-dependencies python3 build-base && \
     npm_config_user=root npm install --location=global n8n@${N8N_VERSION} && \
     apk del build-dependencies
 
-# Install Python 3 and pip
-RUN apk add --update --no-cache python3 py3-pip
-
-# Install the Python libraries you need using apk
-RUN apk add --update --no-cache python3-docx py3-pypdf2
-
-
 WORKDIR /data
 
 EXPOSE $PORT

@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
-# Use latest n8n version
-ARG N8N_VERSION=1.86.1
+# Use the pre-release version
+ARG N8N_VERSION=1.88.0
 
 # Install system dependencies
 RUN apk add --update --no-cache \
@@ -9,31 +9,20 @@ RUN apk add --update --no-cache \
     tzdata \
     python3 \
     build-base \
-    git \
-    && npm install -g npm@latest
+    git
 
-# Install n8n and community nodes with clean cache
-RUN npm install -g \
-    n8n@${N8N_VERSION} \
-    n8n-nodes-mcp@latest \
+# Install n8n (no need to separately install n8n-nodes-mcp as it's now built-in)
+RUN npm install -g n8n@${N8N_VERSION} \
     && npm cache clean --force
 
-# Create and configure data directory
-RUN mkdir -p /data \
-    && chown -R node:node /data \
-    && chmod -R 755 /data
-
-# Environment variables
+# Configure environment
 ENV N8N_USER_FOLDER=/data
-ENV NODE_PATH=/usr/local/lib/node_modules
 ENV N8N_CONFIG_FILES=/data/config
-ENV N8N_USER=node
 ENV N8N_PORT=5678
-ENV N8N_CUSTOM_EXTENSIONS="/usr/local/lib/node_modules"
+ENV N8N_DIAGNOSTICS_ENABLED=true
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:${N8N_PORT}/healthz || exit 1
+# Create data directory
+RUN mkdir -p /data && chown -R node:node /data
 
 WORKDIR /data
 EXPOSE ${N8N_PORT}
